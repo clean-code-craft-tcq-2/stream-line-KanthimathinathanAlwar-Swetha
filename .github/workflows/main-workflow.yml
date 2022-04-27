@@ -22,8 +22,13 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 1.8
+        
     - name: Build and Generate coverage
       run: mvn test jacoco:report
+      
+    - name: run Sender
+      run: mvn compile exec:java -Dexec.mainClass="Sender.Sender"
+      
     - name: Upload coverage
       uses: actions/upload-artifact@v2
       with:
