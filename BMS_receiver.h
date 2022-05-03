@@ -14,4 +14,4 @@ int Calculate_Max(int arr[50], int size);
 
 float Calculate_Average(int arr[50], int start, int end);
 
-void PrintOnConsole(data_array,data,tempData);
+void PrintOnConsole(int min, int max, float Avg);

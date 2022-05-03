@@ -14,15 +14,15 @@ void GetDataFromConsole(char BMS_DATA[50][20])
     }
 }
 
-void PrintOnConsole(data_array,data,tempData)
+PrintOnConsole(int min, int max, float Avg)
 {
-    printf("Minimum Soc: %d\n", Calculate_Min(data, 50));
-    printf("Maximum Soc: %d\n", Calculate_Max(data, 50));
-    printf("Simple moving Average: %f\n", Calculate_Average(data, 45, 50));
+    int minimum = min;
+    int maximum = max;
+    float average = Avg;
 
-    printf("Minimum Temperature: %d\n", Calculate_Min(tempData, 50));
-    printf("Maximum Temperature: %d\n", Calculate_Max(tempData, 50));
-    printf("Simple moving Average: %f\n", Calculate_Average(tempData, 45, 50));
+    printf("Minimum Value: %d\n", minimum);
+    printf("Maximum Value: %d\n", maximum);
+    printf("Simple moving Average: %f\n", average);
 }
 
 void GetSocData(char BMS_DATA[50][20], int data[50], int size)
@@ -95,9 +95,19 @@ int Compute_Stat()
     memcpy(data_array, BMS_DATA, size);
     GetSocData(data_array, data, 50);
 
+    int min   = Calculate_Min(data, 50);
+    int max   = Calculate_Max(data, 50);
+    float Avg = Calculate_Average(data, 45, 50);
+
+    PrintOnConsole(int min, int max, float Avg);
+
     int tempData[50];
     memcpy(data_array, BMS_DATA, size);
     GetTempData(data_array, tempData, 50);
 
-    PrintOnConsole(data_array,data,tempData);
+    int min   = Calculate_Min(tempData, 50);
+    int max   = Calculate_Max(tempData, 50);
+    float Avg = Calculate_Average(tempData, 45, 50);
+
+    PrintOnConsole(int min, int max, float Avg);
 }
