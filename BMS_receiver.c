@@ -7,7 +7,7 @@ void GetDataFromConsole(char BMS_DATA[50][50])
 
     parsedata = gets(Data);
 
-    for(i = 0; parsedata != NULL; i++)
+    for(int i = 0; parsedata != NULL; i++)
     {
         strcpy(BMS_DATA[i], Data);
         parsedata = gets(Data);
