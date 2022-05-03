@@ -4,14 +4,14 @@
 
 void GetDataFromConsole(char BMS_DATA[50][50]);
 
-void GetSocData(char BMS_DATA[50][50], int data[50], int size);
+void GetSocData(char BMS_DATA[50][20], int data[50], int size);
 
-void collectTempData(char BMS_DATA[50][50], int tempData[50], int size);
+void GetTempData(char BMS_DATA[50][20], int tempData[50], int size);
 
-int getMinArrayValue(int arr[50], int size);
+int Calculate_Min(int arr[50], int size);
 
-int getMaxArrayValue(int arr[50], int size);
+int Calculate_Max(int arr[50], int size);
 
-float calculate_Average(int arr[50], int start, int end);
+float Calculate_Average(int arr[50], int start, int end);
 
 void PrintOnConsole();

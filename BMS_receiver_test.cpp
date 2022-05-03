@@ -32,7 +32,7 @@ TEST_CASE("Test to check temp data array is populated with correct data for give
 TEST_CASE("Test to check min value in array is obtained")
 {
     int arr[5] = {16, 8, 48, 17, 0};
-    int min = getMinArrayValue(arr, 5);
+    int min = Calculate_Min(arr, 5);
 
     REQUIRE(min == 0);
 }
@@ -40,7 +40,7 @@ TEST_CASE("Test to check min value in array is obtained")
 TEST_CASE("Test to check max value in array is obtained")
 {
     int arr[5] = {16, 8, 48, 17, 0};
-    int max = getMaxArrayValue(arr, 5);
+    int max = Calculate_Max(arr, 5);
 
     REQUIRE(max == 48);
 }
@@ -48,7 +48,7 @@ TEST_CASE("Test to check max value in array is obtained")
 TEST_CASE("Test to check average of values from array")
 {
     int arr[5] = {16, 8, 48, 17, 0};
-    float avg = calculate_Average(arr, 1, 5);
+    float avg = Calculate_Average(arr, 1, 5);
 
     REQUIRE(avg == 14.6f);
 }

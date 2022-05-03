@@ -1,6 +1,6 @@
 #include "BMS_receiver.h"
 
-void GetDataFromConsole(char BMS_DATA[50][50])
+void GetDataFromConsole(char BMS_DATA[50][20])
 {
     char Data[50];
     char *parsedata;
@@ -18,14 +18,14 @@ void PrintOnConsole()
 {
     printf("Minimum Soc: %d\n", Calculate_Min(data, 50));
     printf("Maximum Soc: %d\n", Calculate_Max(data, 50));
-    printf("Simple moving Average: %f\n", calculate_Average(data, 45, 50));
+    printf("Simple moving Average: %f\n", Calculate_Average(data, 45, 50));
 
     printf("Minimum Temperature: %d\n", Calculate_Min(tempData, 50));
     printf("Maximum Temperature: %d\n", Calculate_Max(tempData, 50));
-    printf("Simple moving Average: %f\n", calculate_Average(tempData, 45, 50));
+    printf("Simple moving Average: %f\n", Calculate_Average(tempData, 45, 50));
 }
 
-void GetSocData(char BMS_DATA[50][50], int data[50], int size)
+void GetSocData(char BMS_DATA[50][20], int data[50], int size)
 {
     for (int i = 0; i < size; i++)
     {
@@ -36,7 +36,7 @@ void GetSocData(char BMS_DATA[50][50], int data[50], int size)
     }
 }
 
-void GetTempData(char BMS_DATA[50][50], int tempData[50], int size)
+void GetTempData(char BMS_DATA[50][20], int tempData[50], int size)
 {
     for (int i = 0; i < size; i++)
     {
@@ -73,7 +73,7 @@ int Calculate_Max(int arr[50], int size)
     return maxValue;
 }
 
-float calculate_Average(int arr[50], int start, int end)
+float Calculate_Average(int arr[50], int start, int end)
 {
     float sum = 0;
     for (int i = start; i < end; i++)
