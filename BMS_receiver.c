@@ -5,7 +5,7 @@ void GetDataFromConsole(char BMS_DATA[50][20])
     char Data[50];
     char *parsedata;
 
-    parsedata = gets(Data);
+    parsedata = fgets(Data);
 
     for(int i = 0; parsedata != NULL; i++)
     {
@@ -14,7 +14,7 @@ void GetDataFromConsole(char BMS_DATA[50][20])
     }
 }
 
-void PrintOnConsole()
+void PrintOnConsole(data_array,data,tempData)
 {
     printf("Minimum Soc: %d\n", Calculate_Min(data, 50));
     printf("Maximum Soc: %d\n", Calculate_Max(data, 50));
@@ -85,8 +85,8 @@ float Calculate_Average(int arr[50], int start, int end)
 
 int Compute_Stat()
 {
-    char BMS_DATA[50][50];
-    char data_array[50][50];
+    char BMS_DATA[50][20];
+    char data_array[50][20];
 
     GetDataFromConsole(BMS_DATA);
 
@@ -99,5 +99,5 @@ int Compute_Stat()
     memcpy(data_array, BMS_DATA, size);
     GetTempData(data_array, tempData, 50);
 
-    PrintOnConsole();
+    PrintOnConsole(data_array,data,tempData);
 }

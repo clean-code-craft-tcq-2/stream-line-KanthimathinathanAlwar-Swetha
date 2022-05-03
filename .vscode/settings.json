@@ -3,6 +3,9 @@
         "algorithm": "cpp",
         "chrono": "cpp",
         "limits": "cpp",
-        "random": "cpp"
+        "random": "cpp",
+        "vector": "c",
+        "xstring": "c",
+        "xutility": "c"
     }
 }
