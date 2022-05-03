@@ -27,7 +27,7 @@ jobs:
       run: mvn compile exec:java -Dexec.mainClass="Sender.Sender"
 
     - name: Build Reciever
-      run: g++ -Wall -Wextra -fprofile-arcs -ftest-coverage -o testreceiver *.c* 
+      run: g++ -Wall -Wextra -fprofile-arcs -ftest-coverage -o testreceiver BMS_receiver_test.cpp BMS_receiver.c
       
     - name: Pipeline_Sender_Receiver_Executables
       run: mvn compile exec:java -Dexec.mainClass="Sender.Sender" | ./testreceiver
