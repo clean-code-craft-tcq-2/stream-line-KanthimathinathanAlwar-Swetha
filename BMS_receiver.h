@@ -1,17 +1,18 @@
 #include <stdio.h>
-#include <string.h>
 #include <stdlib.h>
+#include <math.h>
+#include <string.h>
 
-void GetDataFromConsole(char BMS_DATA[50][50]);
+#define NO_OF_READINGS 50
 
-void GetSocData(char BMS_DATA[50][20], int data[50], int size);
+void GetDataFromConsole(float *Current, float *Temperature);
 
-void GetTempData(char BMS_DATA[50][20], int tempData[50], int size);
+float Calc_MaxParam_Value(float *BMSParameter);
 
-int Calculate_Min(int arr[50], int size);
+float Calc_MinParam_Value(float *BMSParameter);
 
-int Calculate_Max(int arr[50], int size);
+float Calculate_Avg(float *BMSParameter);
 
-float Calculate_Average(int arr[50], int start, int end);
+void PrintDataOnConsole(float *BMSParameter, float MaxValue, float Minvalue, float SMA);
 
-void PrintOnConsole(int min, int max, float Avg);
+void Compute_Stat(float *Current, float *Temperature);

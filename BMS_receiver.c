@@ -1,113 +1,80 @@
 #include "BMS_receiver.h"
 
-void GetDataFromConsole(char BMS_DATA[50][20])
+void GetDataFromConsole(float* Current, float* Temperature)
 {
-    char Data[50];
-    char *parsedata;
-
-    parsedata = fgets(Data);
-
-    for(int i = 0; parsedata != NULL; i++)
+    FILE* fp = fopen("./DataFromConsole.txt","r");
+    float Curr_readings, Temp_readings;
+  
+    for(int i = 0; fscanf(fp, "%f,%f \n", &Curr_readings,&Temp_readings)!=EOF; i++)
     {
-        strcpy(BMS_DATA[i], Data);
-        parsedata = gets(Data);
+        *(Current + i)     = Curr_readings;
+        *(Temperature + i) = Temp_readings;
     }
+
+    fclose(fp);
 }
 
-PrintOnConsole(int min, int max, float Avg)
+float Calc_MaxParam_Value(float *BMSParameter)
 {
-    int minimum = min;
-    int maximum = max;
-    float average = Avg;
-
-    printf("Minimum Value: %d\n", minimum);
-    printf("Maximum Value: %d\n", maximum);
-    printf("Simple moving Average: %f\n", average);
-}
-
-void GetSocData(char BMS_DATA[50][20], int data[50], int size)
-{
-    for (int i = 0; i < size; i++)
+    float MaxReadVal = BMSParameter[0];
+  
+    for(int i = 0; i < NO_OF_READINGS; i++)
     {
-        char *datastr = strtok(BMS_DATA[i], ",");
-        char *DataValue = strtok(datastr, " ");
-        int DataVal = atoi(strtok(NULL, " "));
-        data[i] = DataVal;
-    }
-}
-
-void GetTempData(char BMS_DATA[50][20], int tempData[50], int size)
-{
-    for (int i = 0; i < size; i++)
-    {
-        char *tempDataStr = strtok(BMS_DATA[i], ",");
-        char *tempDataValue = strtok(NULL, " ");
-        int tempDataVal = atoi(strtok(NULL, " "));
-        tempData[i] = tempDataVal;
-    }
-}
-
-int Calculate_Min(int arr[50], int size)
-{
-    int minValue = arr[0];
-    for (int i = 1; i < size; i++)
-    {
-        if (arr[i] < minValue)
+        if(BMSParameter[i] > MaxReadVal)
         {
-            minValue = arr[i];
+            MaxReadVal = BMSParameter[i];
         }
     }
-    return minValue;
+
+    return MaxReadVal;
 }
 
-int Calculate_Max(int arr[50], int size)
+float Calc_MinParam_Value(float *BMSParameter)
 {
-    int maxValue = arr[0];
-    for (int i = 1; i < size; i++)
+    float MinReadVal = BMSParameter[0];
+  
+    for(int i = 0; i < NO_OF_READINGS; i++)
     {
-        if (arr[i] > maxValue)
+        if(BMSParameter[i] < MinReadVal)
         {
-            maxValue = arr[i];
+            MinReadVal = BMSParameter[i];
         }
     }
-    return maxValue;
+   
+    return MinReadVal;
 }
 
-float Calculate_Average(int arr[50], int start, int end)
+float Calculate_Avg(float *BMSParameter)
 {
-    float sum = 0;
-    for (int i = start; i < end; i++)
+    float Average = 0.0;
+    float Sum = 0.0;
+    
+    for(int i = (NO_OF_READINGS-5); i < NO_OF_READINGS; i++)
     {
-        sum += (float)arr[i];
+        Sum += BMSParameter[i];
     }
-    return (float)(sum / 5.0);
+
+    Average = Sum/5;
+    return Average;
 }
 
-int Compute_Stat()
+void PrintDataOnConsole(float *BMSParameter, float MaxValue, float Minvalue, float SMA)
 {
-    char BMS_DATA[50][20];
-    char data_array[50][20];
+    printf("Data received from sender\n");
+  
+    for(int i = 0; i < NO_OF_READINGS; i++)
+    {
+        printf("%f\n",BMSParameter[i]);
+    }
 
-    GetDataFromConsole(BMS_DATA);
+    printf("Max value: %f, Min value: %f, SMA: %f\n",MaxValue,Minvalue,SMA);
+}
 
-    int data[50];
-    int size = sizeof(char) * 50 * 50;
-    memcpy(data_array, BMS_DATA, size);
-    GetSocData(data_array, data, 50);
+void Compute_Stat(float *Current, float *Temperature)
+{
+    GetDataFromConsole(Current,Temperature);
 
-    int min   = Calculate_Min(data, 50);
-    int max   = Calculate_Max(data, 50);
-    float Avg = Calculate_Average(data, 45, 50);
+    PrintDataOnConsole(Current,Calc_MaxParam_Value(Current),Calc_MinParam_Value(Current),Calculate_Avg(Current));
 
-    PrintOnConsole(int min, int max, float Avg);
-
-    int tempData[50];
-    memcpy(data_array, BMS_DATA, size);
-    GetTempData(data_array, tempData, 50);
-
-    int min   = Calculate_Min(tempData, 50);
-    int max   = Calculate_Max(tempData, 50);
-    float Avg = Calculate_Average(tempData, 45, 50);
-
-    PrintOnConsole(int min, int max, float Avg);
+    PrintDataOnConsole(Temperature,Calc_MaxParam_Value(Temperature),Calc_MinParam_Value(Temperature),Calculate_Avg(Temperature));
 }
